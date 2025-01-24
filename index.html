@@ -1,0 +1,305 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doa Harian</title>
+
+    <style>
+        * {
+            font-family: "Rubik", sans-serif;
+        }
+
+        .loader {
+        width: 60px;
+        aspect-ratio: 2;
+        --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
+        background: 
+            var(--_g) 0%   50%,
+            var(--_g) 50%  50%,
+            var(--_g) 100% 50%;
+        background-size: calc(100%/3) 50%;
+        animation: l3 1s infinite linear;
+        }
+        @keyframes l3 {
+            20%{background-position:0%   0%, 50%  50%,100%  50%}
+            40%{background-position:0% 100%, 50%   0%,100%  50%}
+            60%{background-position:0%  50%, 50% 100%,100%   0%}
+            80%{background-position:0%  50%, 50%  50%,100% 100%}
+        }
+
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet" />
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- css fastbootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet"
+        integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous" />
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+
+    <!-- js fastboorstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div class="hero-section position-relative text-center text-white">
+        <div class="h-50 d-flex justify-content-center align-items-center" style="
+          background-image: url('bg.jpg');
+          background-size: cover;
+          background-position: center;
+        ">
+            <div class="overlay" style="
+            position: absolute;
+            bottom: 45;
+            left: 0;
+            right: 0;
+            height: 25%;
+            background: linear-gradient(to top, white 10%, transparent);
+          "></div>
+            <div>
+                <h1 class="display-1 fw-bold">Doa Harian</h1>
+                <p>
+                    Mari Berdoa Bersama <br />Mulai Harimu dengan Doa, Akhiri Harimu dengan Syukur.
+                </p>
+            </div>
+        </div>
+        <div class="position-relative w-50 mx-auto" style="bottom: 40">
+            <div class="input-group input-group-lg mb-3">
+                <span class="input-group-text" id="basic-addon1">Doa</span>
+                <input type="text" class="form-control" placeholder="Cari Doa" aria-label="Cari Doa"
+                    aria-describedby="searchBtn" id="searchDoa" />
+                <button class="btn btn-success" type="button" onclick="randomDoa()" id="randomDoa">
+                    Doa Random
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container d-flex justify-content-center gap-10 pb-16 flex-wrap" id="wrap-card">
+        <div class="d-flex flex-column gap-5">
+            <div class="loader"></div>
+            <div class="loader"></div>
+            <div class="loader"></div>
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="detailDoaModal" aria-labelledby="detailDoaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h1 class="modal-title display-1" id="detailDoaModalLabel"></h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="p-10">
+                        <div class="mb-4">
+                            <h2 class="text-success">Ayat</h2>
+                            <p id="doaAyat" class="display-3"></p>
+                        </div>
+                        <div class="mb-4">
+                            <h2 class="text-success">Latin</h2>
+                            <p id="doaLatin" class="fs-3"></p>
+                        </div>
+                        <div class="mb-4">
+                            <h2 class="text-success">Artinya</h2>
+                            <p class="fs-3">"<span id="doaArtinya"></span>"</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-success text-center text-white">
+        <div class="container p-4 pb-0">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-instagram"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-github"></i></a>
+            </section>
+
+        </div>
+
+
+
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2024 Copyright:
+            <a class="text-white" href="#">Mohfer</a>
+        </div>
+
+    </footer>
+
+
+    <script>
+        AOS.init();
+    </script>
+    <script>
+        $(document).ready(function () {
+            loadDoa();
+
+            $("#searchDoa").on("input", function () {
+                const query = $(this).val().trim();
+                if (query) {
+                    searchDoa(query);
+                } else {
+                    loadDoa();
+                }
+            });
+        });
+
+        function loadDoa() {
+            $.ajax({
+                method: "GET",
+                url: "https://doa-doa-api-ahmadramadhan.fly.dev/api",
+                dataType: "json",
+                success: function (doa) {
+                    console.log("Load Doa Response:", doa);
+                    let cards = "";
+                    doa.forEach((item) => {
+                        let card = `<div class="card rounded-4 shadow-lg" style="width: 35%;" data-aos="fade-up">
+                                        <div class="card-header d-flex align-items-center border-bottom">
+                                            <span class="avatar text-bg-success avatar-lg fs-5">${item.id}</span>
+                                            <div class="ms-3">
+                                                <h4 class="mb-0">${item.doa}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <button type="button" class="btn btn-outline-success w-100 d-flex align-items-center justify-content-between btn-lg" data-bs-toggle="modal" data-bs-target="#detailDoaModal" onclick="showDoaDetail('${item.id}')">Baca Doa Sekarang<i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>`;
+                        cards += card;
+                    });
+                    $("#wrap-card").html(cards);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("Gagal mengambil data doa");
+                },
+            });
+        }
+
+        function searchDoa(query) {
+            $.ajax({
+                method: "GET",
+                url: `https://doa-doa-api-ahmadramadhan.fly.dev/api/doa/${query}`,
+                dataType: "json",
+                success: function (response) {
+                    console.log("Search Doa Response:", response);
+                    let cards = "";
+                    if (Array.isArray(response)) {
+                        response.forEach((item) => {
+                            let card = `<div class="card rounded-4 shadow-lg" style="width: 35%;" data-aos="fade-up">
+                                            <div class="card-header d-flex align-items-center border-bottom">
+                                                <span class="avatar text-bg-success avatar-lg fs-5">${item.id}</span>
+                                                <div class="ms-3">
+                                                    <h4 class="mb-0">${item.doa}</h4>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <button type="button" class="btn btn-outline-success w-100 d-flex align-items-center justify-content-between btn-lg" data-bs-toggle="modal" data-bs-target="#detailDoaModal" onclick="showDoaDetail('${item.id}')">Baca Doa Sekarang<i class="fas fa-arrow-right"></i></button>
+                                            </div>
+                                        </div>`;
+                            cards += card;
+                        });
+                    } else {
+                        let item = response;
+                        let card = `<div class="card rounded-4 shadow-lg" style="width: 35%;">
+                                        <div class="card-header d-flex align-items-center border-bottom">
+                                            <span class="avatar text-bg-success avatar-lg fs-5">${item.id}</span>
+                                            <div class="ms-3">
+                                                <h4 class="mb-0">${item.doa}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <button type="button" class="btn btn-outline-success w-100 d-flex align-items-center justify-content-between btn-lg" data-bs-toggle="modal" data-bs-target="#detailDoaModal" onclick="showDoaDetail('${item.id}')">Baca Doa Sekarang<i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>`;
+                        cards += card;
+                    }
+                    $("#wrap-card").html(cards);
+                },
+                error: function (error) {
+                    if (error.status === 404) {
+                        $("#wrap-card").html(
+                            '<p class="text-center">Doa tidak ditemukan</p>'
+                        );
+                    } else {
+                        console.log(error);
+                        alert("Gagal mencari doa");
+                    }
+                },
+            });
+        }
+
+        function randomDoa() {
+            $.ajax({
+                method: "GET",
+                url: "https://doa-doa-api-ahmadramadhan.fly.dev/api/doa/v1/random",
+                dataType: "json",
+                success: function (response) {
+                    console.log("Random Doa Response:", response);
+                    const item = response[0];
+                    $("#detailDoaModalLabel").text(item.doa);
+                    $("#doaAyat").text(item.ayat);
+                    $("#doaLatin").text(item.latin);
+                    $("#doaArtinya").text(item.artinya);
+                    $("#detailDoaModal").modal('show');
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("Gagal mengambil doa random");
+                }
+            });
+        }
+
+        function showDoaDetail(id) {
+            $.ajax({
+                method: "GET",
+                url: `https://doa-doa-api-ahmadramadhan.fly.dev/api/${id}`,
+                dataType: "json",
+                success: function (response) {
+                    console.log("Detail Doa Response:", response);
+                    const item = response[0];
+                    $("#detailDoaModalLabel").text(item.doa);
+                    $("#doaAyat").text(item.ayat);
+                    $("#doaLatin").text(item.latin);
+                    $("#doaArtinya").text(item.artinya);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("Gagal mengambil detail doa");
+                },
+            });
+        }
+    </script>
+</body>
+
+</html>
